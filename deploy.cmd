@@ -66,6 +66,8 @@ SET MSBUILD_PATH=%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe
 
 echo Handling ASP.NET Core Web Application deployment.
 
+set PATH=D:\home\SiteExtensions\AspNetCoreRuntime.3.0.x86;%PATH%
+
 :: 1. Restore nuget packages
 call :ExecuteCmd dotnet restore "%DEPLOYMENT_SOURCE%\AspNetCoreWithKudu.sln"
 IF !ERRORLEVEL! NEQ 0 goto error
