@@ -6,8 +6,6 @@
 :: ----------------------
 
 echo Running custom deployment Script
-set PATH=D:\home\SiteExtensions\AspNetCoreRuntime.3.0.x86;%PATH%
-echo %PATH%
 
 :: Prerequisites
 :: -------------
@@ -70,7 +68,8 @@ SET MSBUILD_PATH=%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe
 
 echo Handling ASP.NET Core Web Application deployment.
 
-call :ExecuteCmd echo %PATH%
+call :ExecuteCmd @powershell -NoProfile -ExecutionPolicy unrestricted -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; &([scriptblock]::Create((Invoke-WebRequest -useb 'https://dot.net/v1/dotnet-install.ps1'))) -Channel release/3.0.1xx -Architecture x86 -InstallDir D:\home\SiteExtensions\AspNetCoreRuntime.3.0.x86"
+set PATH=D:\home\SiteExtensions\AspNetCoreRuntime.3.0.x86;%PATH%
 
 :: 1. Restore nuget packages
 call :ExecuteCmd dotnet restore "%DEPLOYMENT_SOURCE%\AspNetCoreWithKudu.sln"
